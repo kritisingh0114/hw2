@@ -53,7 +53,7 @@ public class ExpenseTrackerApp {
       }
       
       // Call controller to perform filtering
-      List<Transaction> filteredTransactions = controller.applyFilter(transactionsTable, filteredAmountInput, filteredCategoryInput, emptyAmountInput);
+      List<Transaction> filteredTransactions = controller.applyFilter();
     });
 
   }

@@ -1,6 +1,7 @@
 package controller;
 
 import view.ExpenseTrackerView;
+import model.ExpenseTrackerModel;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -56,7 +57,19 @@ public class ExpenseTrackerController {
   }
 
   //This function applies the filter to the jTable giving the amount or the category the user would like to filter by
-  public List<Transaction> applyFilter(JTable transactionsTable, String amount, String category, boolean emptyAmountInput) {
+  public List<Transaction> applyFilter() {
+    // Get filter data from view
+    String amount = view.getAmountFilterField();
+    String category = view.getCategoryFilterField();
+    JTable transactionsTable = view.getTransactionsTable();
+
+    // for determining whether amount is valid
+    boolean emptyAmountInput = false;
+    if (amount.isEmpty()){
+      amount = "-1";
+      emptyAmountInput = true;
+
+    }
     boolean isCategoryValid = true;
     boolean isAmountValid = true;
     List<Transaction> retList = Collections.emptyList();
