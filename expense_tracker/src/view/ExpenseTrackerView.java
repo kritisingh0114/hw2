@@ -3,22 +3,41 @@ package view;
 import javax.swing.*;
 import javax.swing.JFormattedTextField.AbstractFormatterFactory;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import controller.InputValidation;
+import controller.ExpenseTrackerController;
+
+
 
 import java.awt.*;
 import java.text.NumberFormat;
 
 import model.Transaction;
 import java.util.List;
+import javax.swing.table.TableColumn;
+
+import java.awt.event.*;
+import java.util.regex.*;
+import javax.swing.table.*;
+
+
 
 public class ExpenseTrackerView extends JFrame {
+  private static final int AMOUNT_COL = 1;
+  private static final int CATEGORY_COL = 2;
+
 
   private JTable transactionsTable;
   private JButton addTransactionBtn;
   private JFormattedTextField amountField;
   private JTextField categoryField;
   private DefaultTableModel model;
+
+  private JButton filterButton;
+  private JFormattedTextField amountFilterField;
+  private JTextField categoryFilterField;
+
   
 
   public ExpenseTrackerView() {
@@ -54,6 +73,25 @@ public class ExpenseTrackerView extends JFrame {
   
     JPanel buttonPanel = new JPanel();
     buttonPanel.add(addTransactionBtn);
+
+    // Create UI components
+    JLabel amountFilterLabel = new JLabel("Filter by Amount:");
+    amountFilterField = new JFormattedTextField(format);
+    amountFilterField.setFocusLostBehavior(JFormattedTextField.COMMIT);
+    amountFilterField.setColumns(10);
+    //add to the layout
+    inputPanel.add(amountFilterLabel);
+    inputPanel.add(amountFilterField);
+
+    // Create UI componenets
+    JLabel categoryFilterLabel = new JLabel("Filter by Category:");
+    categoryFilterField = new JTextField(10);
+    //add to the layout
+    inputPanel.add(categoryFilterLabel);
+    inputPanel.add(categoryFilterField);
+    
+    filterButton = new JButton("Filter");
+    buttonPanel.add(filterButton);
   
     // Add panels to frame
     add(inputPanel, BorderLayout.NORTH);
@@ -91,7 +129,25 @@ public class ExpenseTrackerView extends JFrame {
     }  
   
 
-  
+  public JButton getFilterButton(){
+    return filterButton;
+  }
+
+  public String getAmountFilterField(){
+    return amountFilterField.getText();
+  }
+
+    public String getCategoryFilterField(){
+    return categoryFilterField.getText();
+  }
+
+  public void setAmountFilterField(JFormattedTextField amountFilterField){
+    this.amountFilterField = amountFilterField;
+  }
+
+  public void setCategoryFilterField(JTextField categoryFilterField){
+    this.categoryFilterField = categoryFilterField;
+  }
   
   public JButton getAddTransactionBtn() {
     return addTransactionBtn;
